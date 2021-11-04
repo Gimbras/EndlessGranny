@@ -1,0 +1,69 @@
+#SplashScreen {
+
+    background-image: url('./Images/splash.png');
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+
+
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#start {
+    position: absolute;
+    margin-top: 370px;
+    margin-left: 740px;
+    background-color: #b0313e;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+
+}
+
+#gameOverPage {
+    background-image: url('./Images/grave.jpg');
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    font-size: 90px;
+
+}
+
+#restart {
+    position: absolute;
+    margin-top: 370px;
+    margin-left: 740px;
+    background-color: #b0313e;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 90px;
+    border-radius: 8px;
+    width: 350px;
+    height: 200px;
+
+}
+
+
+p {
+    color: rgb(239, 239, 243);
+    text-indent: 30px;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center
+}

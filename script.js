@@ -11,7 +11,7 @@ let jump = false;
 let splashScreen = document.getElementById('SplashScreen');
 let gameScreen = document.getElementById('gamePage');
 let gameOverScreen = document.getElementById('gameOverPage');
-
+let audio = new Audio();
 
 
 
@@ -89,6 +89,7 @@ function showGameOver(){
         gameScreen.style.display = "none";
         splashScreen.style.display = "none";
         gameOverScreen.style.display = "block";
+        audio.pause();
 
     }
 }
@@ -174,18 +175,34 @@ window.addEventListener('load', () => {
     
         start.addEventListener('click',()=>{
             gameScreen.style.display = "block";
-    splashScreen.style.display = "none";
-    gameOverScreen.style.display = "none"
+            splashScreen.style.display = "none";
+            gameOverScreen.style.display = "none"
             
+            audio.src = "./Audio/BeeGees.mp3";
+            audio.play()
+            audio.volume = 0.1;
             draw()
 
         })
 
-        restart.addEventListener(' click',()=>{
-            gameScreen.style.display = "block";
-            splashScreen.style.display = "none";
+        restart.addEventListener('click', ()=>{
+            gameScreen.style.display = "none";
+            splashScreen.style.display = "block";
             gameOverScreen.style.display = "none";
-            
+            isGameOver = false;
+            score = 0;
+            myGrannyX = 20; 
+            myGrannyY = 506;
+            stairs1x =800;
+            stairs2x =1100;
+            stairsy = 550
+            stairs3x =1500;
+            stairsArr = [
+                {x: stairs1x, y: stairsy}, 
+                {x: stairs2x, y: stairsy},
+                {x: stairs3x, y: stairsy},
+            ]
+        
 
         })
         
