@@ -61,30 +61,19 @@ function drawstairs (){
         stairsArr[i].x = stairsArr[i].x - 4     
 
     
-    if (myGrannyX < stairsArr[i].x + 50 &&
-        myGrannyX + 100 > stairsArr[i].x &&
-        myGrannyY < stairsArr[i].y + 50 &&
-        100 + myGrannyY > stairsArr[i].y) {
+    if (myGrannyX < stairsArr[i].x + 40 &&
+        myGrannyX + 80 > stairsArr[i].x &&
+        myGrannyY < stairsArr[i].y + 40 &&
+        80 + myGrannyY > stairsArr[i].y) {
             isGameOver = true;
         }
-
-   
-    
         if(stairsArr[i].x + stairs.width < 0 ) {
             score += 6;
             stairsArr[i].x = 1000 
             //1st set doesnt count
-        }
-        
-
-       
+        } 
    }
 }
-
-
-
-
-
 
 
 
@@ -92,7 +81,15 @@ function drawstairs (){
 
 
 //Game Over
+function resetAll() {
+    myGrannyY = 506
+    stairsArr = [
+        {x: stairs1x, y: stairsy}, 
+        {x: stairs2x, y: stairsy},
+        {x: stairs3x, y: stairsy},
+    ]
 
+}
 
 //
 
@@ -128,9 +125,11 @@ function draw(){
         ctx.drawImage(background,0,0);   
     }
     if (isGameOver == true){
-        cancelAnimationFrame(intervalId)  //
+        cancelAnimationFrame(intervalId)
+      
 
-    }else {
+    }
+    else {
         intervalId = requestAnimationFrame(draw)
 
     }
@@ -173,7 +172,7 @@ window.addEventListener('load', () => {
             gameScreen.style.display = "none";
             splashScreen.style.display = "none";
             gameOverScreen.style.display = "block";
-            draw()
+            resetAll()
 
         })
         
