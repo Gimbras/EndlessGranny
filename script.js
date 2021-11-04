@@ -1,7 +1,6 @@
 //set canvas 
 let canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
-canvas.style.backgroundColor = "#566c56";
 canvas.style.border= "30px solid #1d1513";
 let cWidth = canvas.width;
 let cHeight = canvas.height;
@@ -13,7 +12,8 @@ let gameScreen = document.getElementById('gamePage');
 let gameOverScreen = document.getElementById('gameOverPage');
 let audio = new Audio();
 
-
+let bg = new Image ();
+bg.src = './Images/sky.jpg';
 
 //off canvas buttons
 let start = document.querySelector('#start')
@@ -58,7 +58,7 @@ function drawstairs (){
     
  
     for (let i=0; i<stairsArr.length; i++ ) {
-        ctx.drawImage(stairs, stairsArr[i].x, stairsArr[i].y, 50, 50)
+        ctx.drawImage(stairs, stairsArr[i].x +20, stairsArr[i].y, 50, 50)
         stairsArr[i].x = stairsArr[i].x - 4     
 
     
@@ -110,12 +110,12 @@ function resetAll() {
 //Function jummp + speed
 
 function move (){
-    if(jump && myGrannyY ){
-       myGrannyY = myGrannyY -2
+    if(jump && myGrannyY > 400){
+       myGrannyY = myGrannyY -7
        
     }
     if(jump == false && myGrannyY <= 500){
-        myGrannyY = myGrannyY + 3
+        myGrannyY = myGrannyY + 20
     }
 }
 
@@ -129,6 +129,7 @@ function move (){
 //draw
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bg, 0 , 0)
     drawplayer()
     move()
     // collision()
