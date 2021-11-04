@@ -14,6 +14,7 @@ let gameOverScreen = document.getElementById('gameOverPage');
 
 
 
+
 //off canvas buttons
 let start = document.querySelector('#start')
 
@@ -71,8 +72,10 @@ function drawstairs (){
             score += 6;
             stairsArr[i].x = 1000 
             //1st set doesnt count
-        } 
+        }
+        document.getElementById('score').innerText = score; 
    }
+
 }
 
 
@@ -81,14 +84,24 @@ function drawstairs (){
 
 
 //Game Over
+function showGameOver(){
+    if(isGameOver == true){
+        gameScreen.style.display = "none";
+        splashScreen.style.display = "none";
+        gameOverScreen.style.display = "block";
+
+    }
+}
+
+
 function resetAll() {
-    myGrannyY = 506
+    myGrannyY = 506;
+    myGrannyX = 20;
     stairsArr = [
         {x: stairs1x, y: stairsy}, 
         {x: stairs2x, y: stairsy},
         {x: stairs3x, y: stairsy},
     ]
-
 }
 
 //
@@ -120,7 +133,7 @@ function draw(){
     // collision()
     drawstairs()
     updateScore()
-    
+    showGameOver()
     background.onload = function(){
         ctx.drawImage(background,0,0);   
     }
@@ -169,10 +182,10 @@ window.addEventListener('load', () => {
         })
 
         restart.addEventListener(' click',()=>{
-            gameScreen.style.display = "none";
+            gameScreen.style.display = "block";
             splashScreen.style.display = "none";
-            gameOverScreen.style.display = "block";
-            resetAll()
+            gameOverScreen.style.display = "none";
+            
 
         })
         
