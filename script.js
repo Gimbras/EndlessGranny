@@ -8,14 +8,17 @@ let cHeight = canvas.height;
 let isGameOver = false;
 let score = 0;
 let jump = false;
-let onPlateform = true
+let splashScreen = document.getElementById('SplashScreen');
+let gameScreen = document.getElementById('gamePage');
+let gameOverScreen = document.getElementById('gameOverPage');
+
 
 
 //off canvas buttons
 let start = document.querySelector('#start')
 
 
-let restart = document.querySelector('#Restart')
+let restart = document.querySelector('#restart')
 
 //let player
 let myGranny = new Image();
@@ -45,95 +48,100 @@ let stairsArr = [
 
 //put player on canvas
 function drawplayer (){
-    ctx.drawImage(myGranny, myGrannyX, myGrannyY);
+    ctx.drawImage(myGranny, myGrannyX, myGrannyY, 100, 100 );
    
 }
 
 function drawstairs (){
+    
+    
  
     for (let i=0; i<stairsArr.length; i++ ) {
         ctx.drawImage(stairs, stairsArr[i].x, stairsArr[i].y, 50, 50)
-        stairsArr[i].x = stairsArr[i].x - 0.7     
+        stairsArr[i].x = stairsArr[i].x - 4     
 
-        if(stairsArr[i].x + stairs.width < 0 ) {
-            stairsArr[i].x = 1000 //
+    
+    if (myGrannyX < stairsArr[i].x + 50 &&
+        myGrannyX + 100 > stairsArr[i].x &&
+        myGrannyY < stairsArr[i].y + 50 &&
+        100 + myGrannyY > stairsArr[i].y) {
+            isGameOver = true;
         }
+
+   
+    
+        if(stairsArr[i].x + stairs.width < 0 ) {
+            score += 6;
+            stairsArr[i].x = 1000 
+            //1st set doesnt count
+        }
+        
+
+       
    }
 }
 
-//Function boot
+
+
+
+
+
+
+
+//Start screen
+
+
+//Game Over
+
+
+//
+
+//Function jummp + speed
 
 function move (){
-    if(jump && myGrannyY > 420){
+    if(jump && myGrannyY ){
        myGrannyY = myGrannyY -2
        
     }
     if(jump == false && myGrannyY <= 500){
         myGrannyY = myGrannyY + 3
     }
-    // if (!jump && onPlateform) {
-    //     myGrannyY = myGrannyY - 20
-    //     jump = true
-    // } else if(myGrannyY <= 500) {
-    //     myGrannyY = myGrannyY + 20
-    // }
-
 }
 
-  //request  animation frame (in the end)
-
-
-
-//make granny jump
-
-
-////////////////////////////////////////////
-
-//put fire on canvas --> takes granny out
-
-//gamne functiuon that ill evoce all tother functions
-
-//window event listener
-
-
-
-
-// event listner key up --> window.addEventListener("keyup", keyup_handler, false);
-
-//function fire move
-
-//function start
-
-//put player on canvas
-// function drawplayer (){
-//     ctx.drawImage(myGranny, 20, 506);
-   
+// //splash
+// function splash(){
+//     restart.style.display = 'none'
+//     start.style.display = 'block'
+//     canvas.style.display = 'none'
 // }
-// function drawstairs1 (){
-//     ctx.drawImage(stairs1, 900, 550, 50 ,50);
-//    }
-
 
 //draw
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawplayer()
     move()
-    
+    // collision()
     drawstairs()
-    //move not working just makes it harder
+    updateScore()
     
-    
-    // if (snailX == tanks[i].x +  tankW) {
-    //     score++
-    // }
     background.onload = function(){
         ctx.drawImage(background,0,0);   
     }
+    if (isGameOver == true){
+        cancelAnimationFrame(intervalId)  //
+
+    }else {
+        intervalId = requestAnimationFrame(draw)
+
+    }
     
-    intervalId = requestAnimationFrame(draw)
 }
 
+
+function updateScore () {
+    ctx.font = "24px Brush Script MT";
+    ctx.fillText(`Score: ${score}`, 20, 40);
+}
 
 document.addEventListener('keydown', (event) => {
 if(event.key == ' ' & (myGrannyY >= 419) ) {
@@ -146,13 +154,26 @@ document.addEventListener('keyup', (event) => {
     } 
 })
 window.addEventListener('load', () => {
+    gameScreen.style.display = "none";
+    splashScreen.style.display = "block";
+    gameOverScreen.style.display = "none"
 
-    // document.addEventListener('#start', () => {
+
+    
         start.addEventListener('click',()=>{
+            gameScreen.style.display = "block";
+    splashScreen.style.display = "none";
+    gameOverScreen.style.display = "none"
+            
             draw()
+
         })
 
         restart.addEventListener(' click',()=>{
+            gameScreen.style.display = "none";
+            splashScreen.style.display = "none";
+            gameOverScreen.style.display = "block";
+            draw()
 
         })
         
