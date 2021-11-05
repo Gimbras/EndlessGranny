@@ -6,11 +6,29 @@ let cWidth = canvas.width;
 let cHeight = canvas.height;
 let isGameOver = false;
 let score = 0;
+let speed = 4
 let jump = false;
 let splashScreen = document.getElementById('SplashScreen');
 let gameScreen = document.getElementById('gamePage');
 let gameOverScreen = document.getElementById('gameOverPage');
 let audio = new Audio();
+// let done = false;
+
+
+// let thisTimeout = setTimeout(function() {
+//     myFunction();
+// }, 1000);
+
+// if ((myGrannyY >= 400) && !done) {
+//     myFunction();
+// }
+
+// function myFunction() {
+//     clearTimeout(thisTimeout);
+//     done = true;
+//     // Do stuff
+// }
+
 
 let bg = new Image ();
 bg.src = './Images/sky.jpg';
@@ -24,7 +42,7 @@ let restart = document.querySelector('#restart')
 //let player
 let myGranny = new Image();
 myGranny.src = './Images/pixil-frame-0.png';
-let myGrannyX = 20, myGrannyY = 506  ;
+let myGrannyX = 20, myGrannyY = 500  ;
 
 //background
 let background = new Image();
@@ -43,8 +61,8 @@ let stairsw = stairs.width
 //create an array of stairs then loop over them 
 let stairsArr = [
     {x: stairs1x, y: stairsy}, 
-    {x: stairs2x, y: stairsy},
-    {x: stairs3x, y: stairsy},
+    {x: stairs2x + 500, y: stairsy},
+    {x: stairs3x + 1000, y: stairsy},
 ]
 
 //put player on canvas
@@ -59,7 +77,7 @@ function drawstairs (){
  
     for (let i=0; i<stairsArr.length; i++ ) {
         ctx.drawImage(stairs, stairsArr[i].x +20, stairsArr[i].y, 50, 50)
-        stairsArr[i].x = stairsArr[i].x - 4     
+        stairsArr[i].x = stairsArr[i].x - speed
 
     
     if (myGrannyX < stairsArr[i].x + 40 &&
@@ -68,13 +86,21 @@ function drawstairs (){
         80 + myGrannyY > stairsArr[i].y) {
             isGameOver = true;
         }
-        if(stairsArr[i].x + stairs.width < 0 ) {
-            score += 6;
-            stairsArr[i].x = 1000 
-            //1st set doesnt count
+        if(stairsArr[i].x <= myGrannyX && stairsArr[i].x >= myGrannyX - 10){
+            score++
         }
+         if(stairsArr[i].x + stairs.width < 0 ) {
+        //     score += 6;
+             stairsArr[i].x = 1000 
+        //     //1st set doesnt count
+         }
         document.getElementById('score').innerText = score; 
+        if(score >= 25){
+            speed = 9
+        }
    }
+
+
 
 }
 
@@ -90,6 +116,7 @@ function showGameOver(){
         splashScreen.style.display = "none";
         gameOverScreen.style.display = "block";
         audio.pause();
+        score = 0
 
     }
 }
@@ -111,12 +138,17 @@ function resetAll() {
 
 function move (){
     if(jump && myGrannyY > 400){
-       myGrannyY = myGrannyY -7
+       myGrannyY = myGrannyY -3.5
+    //    if(myGrannyY = 400){
+    //        jump = false
+    //    }
        
     }
     if(jump == false && myGrannyY <= 500){
-        myGrannyY = myGrannyY + 20
+        myGrannyY = myGrannyY + 4
     }
+
+
 }
 
 // //splash
@@ -132,10 +164,11 @@ function draw(){
     ctx.drawImage(bg, 0 , 0)
     drawplayer()
     move()
-    // collision()
+    
     drawstairs()
     updateScore()
     showGameOver()
+    
     background.onload = function(){
         ctx.drawImage(background,0,0);   
     }
@@ -191,9 +224,9 @@ window.addEventListener('load', () => {
             splashScreen.style.display = "block";
             gameOverScreen.style.display = "none";
             isGameOver = false;
-            score = 0;
+       //     score = 0;
             myGrannyX = 20; 
-            myGrannyY = 506;
+            myGrannyY = 500;
             stairs1x =800;
             stairs2x =1100;
             stairsy = 550
